@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="app-icon.ico" alt="Burraq Logo" width="120" />
+<img src="chrome-extension/icons/icon512.png" alt="Burraq Logo" width="120" />
 
 # 🚀 BURRAQ - Universal Downloader
 
