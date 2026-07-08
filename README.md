@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://img.icons8.com/fluency/256/down.png" alt="Burraq Logo" width="120" />
+<img src="app-icon.ico" alt="Burraq Logo" width="120" />
 
 # 🚀 BURRAQ - Universal Downloader
 
