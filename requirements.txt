@@ -1,0 +1,24 @@
+# Burraq v4.0 - Premium Download Manager
+# Install with: pip install -r requirements.txt
+
+# Core dependencies for video downloading
+yt-dlp>=2024.1.0
+
+# Web server for Chrome Extension communication
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+
+# System tray integration
+pystray>=0.19.0
+Pillow>=10.0.0
+
+# CLI & Rich (optional, for terminal mode)
+rich>=13.0.0
+pyperclip>=1.8.2
+
+# Additional utilities
+httpx>=0.24.0
+pydantic>=2.0.0
+
+# System monitoring for CPU throttling
+psutil>=5.9.0

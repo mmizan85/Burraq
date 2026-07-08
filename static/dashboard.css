@@ -1,0 +1,351 @@
+/* Burraq Dashboard - Glassmorphism Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-cyan: #00ffb4;
+  --color-blue: #00d4ff;
+  --color-danger: #ff4060;
+  --color-warning: #ffaa00;
+  --color-success: #00ff88;
+}
+
+* {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+.custom-logo {
+  width: 128px;
+  height: auto;
+}
+
+/* Navigation Items */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(0, 255, 180, 0.08);
+  color: var(--color-cyan);
+}
+
+.nav-item.active {
+  background: rgba(0, 255, 180, 0.15);
+  color: var(--color-cyan);
+  font-weight: 500;
+}
+
+.nav-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Download Card */
+.download-card {
+  background: rgba(13, 18, 25, 0.6);
+  border: 1px solid rgba(0, 255, 180, 0.12);
+  border-radius: 14px;
+  padding: 18px;
+  backdrop-filter: blur(16px);
+  transition: all 0.2s ease;
+}
+
+.download-card:hover {
+  border-color: rgba(0, 255, 180, 0.25);
+  background: rgba(13, 18, 25, 0.7);
+}
+
+/* Progress Bar */
+.progress-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffb4, #00d4ff);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-queued {
+  background: rgba(255, 160, 0, 0.15);
+  color: #ffaa00;
+}
+
+.status-downloading {
+  background: rgba(0, 212, 255, 0.15);
+  color: #00d4ff;
+}
+
+.status-processing {
+  background: rgba(255, 0, 255, 0.15);
+  color: #ff00ff;
+}
+
+.status-completed {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.status-failed {
+  background: rgba(255, 64, 96, 0.15);
+  color: #ff4060;
+}
+
+.status-paused {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+}
+
+/* Filter Buttons */
+.filter-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(0, 255, 180, 0.1);
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: rgba(0, 255, 180, 0.1);
+  color: #00ffb4;
+}
+
+.filter-btn.active {
+  background: rgba(0, 255, 180, 0.2);
+  color: #00ffb4;
+  border-color: rgba(0, 255, 180, 0.3);
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(13, 18, 25, 0.6);
+  border: 1px solid rgba(0, 255, 180, 0.12);
+  border-radius: 14px;
+  padding: 20px;
+  backdrop-filter: blur(16px);
+}
+
+/* Toggle Switch with Tooltip - Fixed for click functionality */
+.toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.toggle-switch .toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background: rgba(100, 116, 136, 0.3);
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.toggle-switch .toggle-track.on {
+  background: linear-gradient(180deg, #00ffb4, #00d4ff);
+  box-shadow: 0 0 12px rgba(0, 255, 180, 0.4);
+}
+
+.toggle-switch .toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.toggle-switch input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(20px);
+}
+
+.toggle-switch .toggle-tooltip {
+  position: absolute;
+  top: -32px;
+  right: 0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.toggle-switch .toggle-tooltip.on {
+  background: rgba(0, 255, 180, 0.2);
+  color: #00ffb4;
+  border: 1px solid rgba(0, 255, 180, 0.3);
+}
+
+.toggle-switch .toggle-tooltip.off {
+  background: rgba(100, 116, 136, 0.3);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 136, 0.4);
+}
+
+.toggle-switch:hover .toggle-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Clipboard Paste Button */
+.clipboard-paste-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(0, 255, 180, 0.1);
+  color: #00ffb4;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.clipboard-paste-btn:hover {
+  background: rgba(0, 255, 180, 0.2);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.clipboard-paste-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.clipboard-paste-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 180, 0.3);
+}
+
+.clipboard-paste-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Speed Limit Input */
+.speed-limit-input {
+  width: 80px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 180, 0.15);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.speed-limit-input:focus {
+  outline: none;
+  border-color: var(--color-cyan);
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: rgba(13, 18, 25, 0.9);
+  border: 1px solid rgba(0, 255, 180, 0.2);
+  backdrop-filter: blur(16px);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 180, 0.2);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 180, 0.3);
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(13, 18, 25, 0.5);
+  border: 1px solid rgba(0, 255, 180, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.glass-strong {
+  background: rgba(13, 18, 25, 0.7);
+  border: 1px solid rgba(0, 255, 180, 0.2);
+  backdrop-filter: blur(24px);
+}
+.custom-logo {
+  width: 512px;
+  height: auto;
+}

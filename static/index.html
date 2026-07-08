@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/static/images/icon_32x32.png">
+  <title>Burraq - Web Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+
+<body
+  class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 font-sans antialiased">
+  <!-- Background Effects -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="relative z-10 flex h-screen">
+    <!-- Sidebar - Simplified to 4 main tabs -->
+    <aside class="w-64 border-r border-slate-800/50 bg-slate-900/50 backdrop-blur-xl p-4 flex flex-col">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- <path d="M12 2v16M6 10l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /> -->
+            <img src="/static/images/icon_128x128.png" alt="Burraq Logo" class="custom-logo">          
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Burraq
+          </h1>
+          <p class="text-xs text-slate-400">Download Manager v1.0</p>
+        </div>
+      </div>
+
+      <nav class="space-y-2">
+        <a href="#" class="nav-item active" data-section="downloads">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+          <span>Downloads</span>
+        </a>
+        <a href="#" class="nav-item" data-section="history">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2z" />
+            <path d="M12 6v6l3 3" stroke-linecap="round" />
+          </svg>
+          <span>History</span>
+        </a>
+        <a href="#" class="nav-item" data-section="storage">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12H2M22 12V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6" />
+            <path d="M12 17V7M6 11l6 6 6-6" />
+          </svg>
+          <span>Storage & Insights</span>
+        </a>
+        <a href="#" class="nav-item" data-section="settings">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M12 1v2M12 21v-2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h-2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- About pinned at bottom -->
+      <div class="mt-auto">
+        <a href="#" class="nav-item" data-section="about">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4M12 8h.01" stroke-linecap="round" />
+          </svg>
+          <span>About</span>
+        </a>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800/50">
+        <div class="text-xs text-slate-400 mb-2">Server Status</div>
+        <div class="flex items-center gap-2 mb-3">
+          <div id="statusIndicator" class="w-2 h-2 rounded-full bg-slate-500"></div>
+          <span id="statusText" class="text-sm">Connecting...</span>
+        </div>
+        <div class="text-xs text-slate-400">
+          <span>yt-dlp: </span><span id="ytdlpVersion" class="text-cyan-400">-</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <!-- Header - Dynamic based on section -->
+      <header
+        class="h-16 border-b border-slate-800/50 bg-slate-900/30 backdrop-blur-xl flex items-center justify-between px-6">
+        <div class="flex items-center gap-4">
+          <h2 id="sectionTitle" class="text-lg font-semibold">Downloads</h2>
+          <div id="topFilters" class="flex items-center gap-2">
+            <!-- Dynamic filters for Downloads/History sections -->
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="headerActions" class="flex items-center justify-center gap-4">
+            <button id="pauseAllBtn"
+              class="px-6 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors text-sm">
+              Pause All
+            </button>
+            <button id="resumeAllBtn"
+              class="px-6 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors text-sm">
+              Resume All
+            </button>
+          </div>
+          <button id="openFolderBtn"
+            class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500/30 to-blue-500/30 hover:from-cyan-500/40 hover:to-blue-500/40 transition-all text-cyan-300 text-sm font-medium flex items-center gap-2 shadow-lg shadow-cyan-500/20">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+            </svg>
+            Open Folder
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="flex-1 overflow-y-auto p-6">
+        <!-- Downloads Section -->
+        <div id="downloadsSection" class="section">
+          <div id="downloadList" class="space-y-4">
+            <div class="text-center py-12 text-slate-400">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1">
+                <path d="M12 2v16M6 10l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <p>No active downloads</p>
+              <p class="text-sm mt-2">Add a download from the Chrome extension or use the API</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Section -->
+        <div id="historySection" class="section hidden">
+          <div id="historyList" class="space-y-4">
+            <div class="text-center py-12 text-slate-400">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1">
+                <path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2z" />
+                <path d="M12 6v6l3 3" stroke-linecap="round" />
+              </svg>
+              <p>No download history</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settingsSection" class="section hidden">
+          <div class="max-w-2xl space-y-6">
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Download Settings</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Default Download Path</label>
+                  <input type="text" id="downloadDirInput" placeholder="C:\Downloads\Burraq"
+                    class="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Max Concurrent Downloads</label>
+                  <input type="number" id="maxConcurrentInput" min="1" max="10" value="3"
+                    class="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Tool Paths</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">yt-dlp Path</label>
+                  <div class="flex gap-2">
+                    <input type="text" id="ytdlpPathInput" placeholder="Auto-detected"
+                      class="flex-1 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none text-sm">
+                    <button type="button" id="browseYtdlpBtn"
+                      class="px-3 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors text-sm">
+                      Browse
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">FFmpeg Path</label>
+                  <div class="flex gap-2">
+                    <input type="text" id="ffmpegPathInput" placeholder="Auto-detected"
+                      class="flex-1 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none text-sm">
+                    <button type="button" id="browseFfmpegBtn"
+                      class="px-3 py-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors text-sm">
+                      Browse
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Browser Cookies</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-medium">Enable Browser Cookies</label>
+                  <label class="toggle-switch cursor-pointer" data-toggle="browserCookies">
+                    <input type="checkbox" id="browserCookiesToggle">
+                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    <span class="toggle-tooltip off">Status: OFF</span>
+                  </label>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Target Browser</label>
+                  <select id="browserSelect"
+                    class="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+                    <option value="chrome">Chrome</option>
+                    <option value="edge">Edge</option>
+                    <option value="firefox">Firefox</option>
+                    <option value="brave">Brave</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Speed Limiter</h3>
+              <div>
+                <label class="block text-sm font-medium mb-2">Max Bandwidth (Mbps)</label>
+                <input type="number" id="speedLimitInput" min="0" max="1000" placeholder="Unlimited"
+                  class="w-full px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Metadata & Thumbnails</h3>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-medium">Embed Metadata</label>
+                  <label class="toggle-switch cursor-pointer" data-toggle="embedMetadata">
+                    <input type="checkbox" id="embedMetadataToggle" checked>
+                    <span class="toggle-track on"><span class="toggle-thumb"></span></span>
+                    <span class="toggle-tooltip on">Status: ON</span>
+                  </label>
+                </div>
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-medium">Embed Thumbnails</label>
+                  <label class="toggle-switch cursor-pointer" data-toggle="embedThumbnails">
+                    <input type="checkbox" id="embedThumbnailsToggle" checked>
+                    <span class="toggle-track on"><span class="toggle-thumb"></span></span>
+                    <span class="toggle-tooltip on">Status: ON</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Auto-Update</h3>
+              <div class="flex items-center justify-between">
+                <label class="text-sm font-medium">Enable Daily yt-dlp Updates</label>
+                <label class="toggle-switch cursor-pointer" data-toggle="autoUpdate">
+                  <input type="checkbox" id="autoUpdateToggle" checked>
+                  <span class="toggle-track on"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-tooltip on">Status: ON</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button id="saveSettingsBtn"
+                class="px-6 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 transition-all font-medium">
+                Save Settings
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Storage & Insights Section -->
+        <div id="storageSection" class="section hidden">
+          <div class="max-w-4xl space-y-6">
+            <h2 class="text-xl font-semibold mb-4">Storage & Insights</h2>
+
+            <!-- Drive Storage Analytics -->
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Drive Storage Analytics</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-cyan-400" id="driveTotal">-- GB</div>
+                  <div class="text-xs text-slate-400">Total Space</div>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-green-400" id="driveFree">-- GB</div>
+                  <div class="text-xs text-slate-400">Free Space</div>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-blue-400" id="folderSize">-- GB</div>
+                  <div class="text-xs text-slate-400">Burraq Folder Size</div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="flex items-center justify-between text-xs mb-1">
+                  <span>Storage Usage</span>
+                  <span id="storagePercent" class="font-mono">--%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="storageProgress" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time-Based Statistics -->
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Download Statistics</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-cyan-400" id="lastHour">0</div>
+                  <div class="text-xs text-slate-400">Last Hour</div>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-cyan-400" id="todayCount">0</div>
+                  <div class="text-xs text-slate-400">Today</div>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-cyan-400" id="yesterdayCount">0</div>
+                  <div class="text-xs text-slate-400">Yesterday</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Folder Structure Insights -->
+            <div class="glass-card">
+              <h3 class="text-lg font-semibold mb-4">Folder Structure Insights</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-purple-400" id="fileCount">0</div>
+                  <div class="text-xs text-slate-400">Total Files</div>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-slate-800/30">
+                  <div class="text-2xl font-bold text-purple-400" id="folderCount">0</div>
+                  <div class="text-xs text-slate-400">Sub-folders</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Section -->
+        <div id="aboutSection" class="section hidden">
+          <div class="max-w-2xl mx-auto text-center space-y-8">
+            <div class="flex flex-col items-center">
+              <div
+                class="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center mb-4">
+                <svg class="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <!-- <path d="M12 2v16M6 10l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /> -->
+                  <img src="/static/images/icon_128x128.png" alt="Burraq Logo" class="custom-logo">
+                </svg>
+              </div>
+              <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Burraq</h1>
+              <p class="text-lg text-slate-400 mt-2">The Ultimate Universal Downloader</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+              <div class="glass-card">
+                <h4 class="font-semibold text-cyan-400 mb-2">Multi-Platform Support</h4>
+                <p class="text-sm text-slate-300">Download from YouTube, Vimeo, Twitch, TikTok, Twitter/X, Reddit, and
+                  1000+ more sites.</p>
+              </div>
+              <div class="glass-card">
+                <h4 class="font-semibold text-cyan-400 mb-2">Real-Time Dashboard</h4>
+                <p class="text-sm text-slate-300">Monitor downloads with live progress bars and WebSocket updates.</p>
+              </div>
+              <div class="glass-card">
+                <h4 class="font-semibold text-cyan-400 mb-2">Feature Phone Mode</h4>
+                <p class="text-sm text-slate-300">Optimized downloads for older devices with F-video format.</p>
+              </div>
+              <div class="glass-card">
+                <h4 class="font-semibold text-cyan-400 mb-2">LAN Access</h4>
+                <p class="text-sm text-slate-300">Control downloads from any device on your local network.</p>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <h4 class="font-semibold mb-3">Support & Updates</h4>
+              <p class="text-sm text-slate-300 mb-4">
+                Report bugs and request features on our GitHub repository.
+                Regular updates ensure compatibility with the latest sites.
+              </p>
+              <a href="https://github.com/mmizan85/Burraq" target="_blank"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 transition-colors text-cyan-400">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M9 19c-5 1.66-5-2.71-7-3V7a3 3 0 0 1 3-3 2 2 0 0 0 2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2A5 5 0 0 1 9 19zM21 19c-5 1.66-5-2.71-7-3V7a3 3 0 0 1 3-3 2 2 0 0 0 2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2A5 5 0 0 1 21 19zM9 19V7M15 19V7" />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800/50">
+              <p class="text-slate-400">
+                Developed by <span class="text-cyan-400 font-semibold">Mohammad Mizanur Rahman (Mohammad Mizan)</span>
+              </p>
+              <p class="text-xs text-slate-500 mt-1">© 2024 Burraq. MIT License.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Download Form (only visible in Downloads section) -->
+      <div id="downloadFormContainer" class="border-t border-slate-800/50 bg-slate-900/30 backdrop-blur-xl p-4">
+        <form id="addDownloadForm" class="flex items-center gap-3">
+          <div class="relative flex-1">
+            <input type="url" id="urlInput" placeholder="Paste video/audio URL here..."
+              class="w-full pl-4 pr-12 py-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none transition-colors"
+              required>
+            <button type="button" id="clipboardPasteBtn"
+              class="clipboard-paste-btn"
+              title="Paste from clipboard">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                <rect x="8" y="1" width="8" height="4" rx="1" ry="1" />
+              </svg>
+            </button>
+          </div>
+          <select id="typeSelect"
+            class="px-3 py-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+          </select>
+          <select id="qualitySelect"
+            class="px-3 py-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+            <!-- Dynamic options based on type -->
+          </select>
+          <select id="formatSelect"
+            class="px-3 py-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50 focus:border-cyan-500/50 focus:outline-none">
+            <!-- Dynamic options based on type -->
+          </select>
+          <button type="submit"
+            class="px-6 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 transition-all font-medium">
+            Add Download
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/dashboard.js"></script>
+</body>
+
+</html>

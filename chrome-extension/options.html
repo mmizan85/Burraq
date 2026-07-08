@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burraq Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --void: #050608;
+      --deep: #080c11;
+      --surface: #0d1219;
+      --surface2: #111822;
+      --rim: rgba(0, 255, 180, 0.12);
+      --rim2: rgba(0, 255, 180, 0.26);
+      --bio: #00ffb4;
+      --pulse: #00d4ff;
+      --danger: #ff4060;
+      --text: #eaf5ff;
+      --muted: rgba(234, 245, 255, 0.68);
+      --font-disp: 'Syne', 'Helvetica Neue', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --r: 18px;
+      --r-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(0, 255, 180, 0.12), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(0, 180, 255, 0.12), transparent 30%),
+        var(--void);
+      color: var(--text);
+      font-family: var(--font-disp);
+    }
+
+    .wrap {
+      width: min(860px, calc(100vw - 32px));
+      margin: 32px auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero,
+    .panel {
+      background: rgba(13, 18, 25, 0.9);
+      border: 1px solid var(--rim);
+      border-radius: var(--r);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.38);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto -20% -40% auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 180, 0.12), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(0, 255, 180, 0.58);
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1;
+    }
+
+    .sub {
+      max-width: 620px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .panel {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border: 1px solid rgba(0, 255, 180, 0.08);
+      border-radius: var(--r-sm);
+      background: linear-gradient(135deg, rgba(0, 255, 180, 0.05), rgba(0, 180, 255, 0.04));
+    }
+
+    .label {
+      display: grid;
+      gap: 5px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toggle {
+      position: relative;
+      width: 60px;
+      height: 34px;
+    }
+
+    .toggle input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .toggle-ui {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--rim2);
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      transition: 0.2s ease;
+    }
+
+    .toggle-ui::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      transition: 0.2s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+    }
+
+    .toggle input:checked+.toggle-ui {
+      background: linear-gradient(135deg, rgba(0, 255, 180, 0.8), rgba(0, 180, 255, 0.8));
+    }
+
+    .toggle input:checked+.toggle-ui::after {
+      transform: translateX(26px);
+      background: #04110d;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      min-width: 200px;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1px solid var(--rim2);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: var(--font-mono);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--muted);
+    }
+
+    select {
+      min-width: 170px;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1px solid var(--rim2);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: var(--font-mono);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .status {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(0, 255, 180, 0.7);
+      min-height: 18px;
+    }
+
+    .btn {
+      height: 42px;
+      padding: 0 18px;
+      border: 1px solid var(--rim2);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0, 255, 180, 0.14), rgba(0, 180, 255, 0.12));
+      color: var(--text);
+      font-family: var(--font-mono);
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      border-color: var(--bio);
+      color: var(--bio);
+    }
+
+    @media (max-width: 720px) {
+      .wrap {
+        width: min(100vw - 18px, 860px);
+        margin: 16px auto;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Burraq SETTINGS</div>
+      <h1>Burraq Configuration</h1>
+      <p class="sub">
+        Configure your local Burraq server connection, download preferences, and legacy compatibility settings.
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="row">
+        <div class="label">
+          <div class="title">Server URL</div>
+          <div class="hint">The address of your Burraq server (e.g., http://192.168.1.5:9090)</div>
+        </div>
+        <input type="url" id="serverUrl" placeholder="http://localhost:9090" value="http://localhost:9090">
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <div class="title">Embed Metadata & Thumbnail</div>
+          <div class="hint">Write title metadata and try embedding the thumbnail into supported output files.</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="embedMetadata" checked>
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <div class="title">Download Subtitles</div>
+          <div class="hint">Fetch manual and automatic subtitles when available. Video downloads will embed them when
+            possible.</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="downloadSubtitles">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <div class="title">Default Quality Selection</div>
+          <div class="hint">Used as the popup default when you choose video downloads.</div>
+        </div>
+        <select id="defaultQuality">
+          <option value="best">Best</option>
+          <option value="2160p">4K</option>
+          <option value="1440p">2K</option>
+          <option value="1080p" selected>1080p</option>
+          <option value="720p">720p</option>
+          <option value="480p">480p</option>
+          <option value="360p">360p</option>
+          <option value="240p">240p</option>
+          <option value="F-video">Feature Phone</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="label">
+          <div class="title">Legacy Mode (F-video)</div>
+          <div class="hint">Strictly prefer H.264 video with MP4 output for older devices and broader playback
+            compatibility.</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="legacyMode">
+          <span class="toggle-ui"></span>
+        </label>
+      </div>
+
+      <div class="footer">
+        <div class="status" id="saveStatus"></div>
+        <button class="btn" id="saveBtn">SAVE SETTINGS</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+
+</html>
