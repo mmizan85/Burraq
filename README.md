@@ -1,6 +1,7 @@
 <div align="center">
-
-<img src="https://github.com/mmizan85/Burraq/blob/main/assets/icon_128x128.png" alt="Burraq Logo" width="128" />
+<p align="center">
+  <img width="160" alt="icon_512x512" src="https://github.com/user-attachments/assets/c9a48fff-e25a-4e36-bc3c-601c40358141" />
+</p>
 
 # 🚀 BURRAQ - Universal Downloader
 
@@ -19,10 +20,6 @@
 
 ## 🌟 About The Project
 **Burraq** is an advanced, multi-threaded media downloading ecosystem. It combines the raw power of `yt-dlp` and `FFmpeg` with a stunning dark Glassmorphism Web UI. Designed for power users, it features a background system tray engine, smart playlist handling, browser cookie extraction, and real-time WebSocket progress tracking. 
-
-<div align="center">
-  <img src="assets/Burraq - web_dashbard_win.png" alt="Burraq Dashboard UI" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);"/>
-</div>
 
 ---
 
@@ -69,7 +66,17 @@ graph TD;
 * **Inno Setup** - Windows Compilation
 
 ---
+## 📸 Visual Showcase
 
+| Download Page |  History pagel  |
+| :---: | :---: |
+| <img width="500" alt="Burraq - web_dashbard_win" src="https://github.com/user-attachments/assets/7dd57f5e-f384-47c7-871a-766db64c0a25" /> | <img width="500" alt="History" src="https://github.com/user-attachments/assets/15bd3c52-19d2-48a5-add2-8c3ff20b24eb" /> |
+
+| Settings Page |  Extensions pagel  |
+| :---: | :---: |
+| <img width="500" alt="Settings" src="https://github.com/user-attachments/assets/1b06dea9-3550-466f-984a-96bea16468f6" /> | <img width="180" alt="Burraq - Extension_popup-win" src="https://github.com/user-attachments/assets/a947378e-8364-4ab9-ab11-487a16aa7641" /> <img width="180" alt="Custolm_buttons" src="https://github.com/user-attachments/assets/669b586e-115e-4d2a-9b99-6c1cf2a8d7fb" />|
+
+---
 ## 🚀 Getting Started
 
 ### Method 1: 1-Click Windows Installer (Recommended)
