@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="chrome-extension/icons/icon512.png" alt="Burraq Logo" width="120" />
+<img src="https://github.com/mmizan85/Burraq/blob/main/assets/icon_128x128.png" alt="Burraq Logo" width="128" />
 
 # 🚀 BURRAQ - Universal Downloader
 
@@ -21,7 +21,7 @@
 **Burraq** is an advanced, multi-threaded media downloading ecosystem. It combines the raw power of `yt-dlp` and `FFmpeg` with a stunning dark Glassmorphism Web UI. Designed for power users, it features a background system tray engine, smart playlist handling, browser cookie extraction, and real-time WebSocket progress tracking. 
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x450/111827/00ffb4?text=+Insert+Dashboard+Screenshot+Here+" alt="Burraq Dashboard UI" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);"/>
+  <img src="assets/Burraq - web_dashbard_win.png" alt="Burraq Dashboard UI" style="border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);"/>
 </div>
 
 ---
@@ -58,8 +58,6 @@ graph TD;
     H --> I[(SQLite Analytics DB)]
 
 ```
-
----
 
 ## 🛠️ Built With
 
