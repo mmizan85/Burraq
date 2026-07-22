@@ -74,7 +74,7 @@ graph TD;
 
 | Settings Page |  Extensions pagel  |
 | :---: | :---: |
-| <img width="450" alt="Settings" src="https://github.com/user-attachments/assets/1b06dea9-3550-466f-984a-96bea16468f6" /> | <img width="225" alt="Burraq - Extension_popup-win" src="https://github.com/user-attachments/assets/a947378e-8364-4ab9-ab11-487a16aa7641" /> <img width="225" alt="Custolm_buttons" src="https://github.com/user-attachments/assets/669b586e-115e-4d2a-9b99-6c1cf2a8d7fb" />|
+| <img width="480" alt="Settings" src="https://github.com/user-attachments/assets/1b06dea9-3550-466f-984a-96bea16468f6" /> | <img width="225" alt="Burraq - Extension_popup-win" src="https://github.com/user-attachments/assets/a947378e-8364-4ab9-ab11-487a16aa7641" /> <img width="225" alt="Custolm_buttons" src="https://github.com/user-attachments/assets/669b586e-115e-4d2a-9b99-6c1cf2a8d7fb" />|
 
 ---
 ## 🚀 Getting Started
